@@ -4,4 +4,3 @@ deployment:
  - export DEPLOYPATH=/home/imr2ybkardyt/public_html/
  - /bin/cp /home/imr2ybkardyt/Project/site.html $DEPLOYPATH
  - /bin/cp -R /home/imr2ybkardyt/Project/src $DEPLOYPATH
->>>>>>> Stashed changes
