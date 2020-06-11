@@ -3,6 +3,8 @@ const fs = require('fs')
 
 const PORT = 8000
 
+console.log("http://localhost:8000/home.html")
+
 http
     .createServer((request, response) => {
         fs.readFile(`.${request.url}`, (err, data) => {
