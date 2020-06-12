@@ -29,6 +29,12 @@ http
                 })
             }
 
+            if (request.url.endsWith('.png')) {
+                response.writeHeader(200, {
+                    'Content-Type': 'iamge/png'
+                })
+            }
+
             response.write(data)
             response.end()
         })
