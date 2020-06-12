@@ -3,6 +3,8 @@ const fs = require('fs')
 
 const PORT = 8000
 
+console.log("http://localhost:8000/home.html")
+
 http
     .createServer((request, response) => {
         fs.readFile(`.${request.url}`, (err, data) => {
@@ -24,6 +26,12 @@ http
             if (request.url.endsWith('.js')) {
                 response.writeHeader(200, {
                     'Content-Type': 'application/javascript'
+                })
+            }
+
+            if (request.url.endsWith('.png')) {
+                response.writeHeader(200, {
+                    'Content-Type': 'iamge/png'
                 })
             }
 
