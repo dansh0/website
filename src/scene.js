@@ -13,7 +13,7 @@ let multiplier = 10;
 var camera = new THREE.OrthographicCamera(canvasWidth/-multiplier,canvasWidth/multiplier,canvasHeight/multiplier,canvasHeight/-multiplier,-50,50)
 
 // renderer
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setClearColor (0x444444, 1);
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
@@ -29,19 +29,17 @@ controls.mouseButtons = {
 const loadManager = new THREE.LoadingManager();
 const loader = new THREE.TextureLoader(loadManager);
 
-let faces = {
-	black: new THREE.MeshPhongMaterial({color: 0x000000}),//{map: loader.load( "src/resources/textures/textures_black.png" )}),
-	blue: new THREE.MeshPhongMaterial({color: 0x0000ff}),//{map: loader.load( "src/resources/textures/textures_blue.png" )}),
-	green: new THREE.MeshPhongMaterial({color: 0x00ff00}),//{map: loader.load( "src/resources/textures/textures_green.png" )}),
-	orange: new THREE.MeshPhongMaterial({color: 0xff5555}),//{map: loader.load( "src/resources/textures/textures_orange.png" )}),
-	red: new THREE.MeshPhongMaterial({color: 0xff0000}),//{map: loader.load( "src/resources/textures/textures_red.png" )}),
-	white: new THREE.MeshPhongMaterial({color: 0xffffff}),//{map: loader.load( "src/resources/textures/textures_white.png" )}),
-	yellow: new THREE.MeshPhongMaterial({color: 0x00ffff})//{map: loader.load( "src/resources/textures/textures_yellow.png" )})
+let materialMaps = []
+for (var iMat=0; iMat<27; iMat++) {
+	let fileNumber = iMat.toString().padStart(2, '0')
+	let fileName = "src/resources/textures/UVMap_" + fileNumber + ".png";
+	let textureMap = new THREE.MeshPhongMaterial({map: loader.load(fileName)}) 
+	materialMaps.push(textureMap);
 }
 
-Object.keys(faces).forEach(mat => {
+materialMaps.forEach(mat => {
 	// faces[mat].map.anisotropy = 16;
-	faces[mat].shininess = 100;
+	mat.shininess = 100;
 	// faces[mat].color = 0x996633;
     // faces[mat].specular = 0x050505;
 })
@@ -51,14 +49,6 @@ let xPos = [...Array(3).keys()];
 let yPos = [...Array(3).keys()];
 let zPos = [...Array(3).keys()];
 
-// map faces to indices
-let xNegColor = [faces.green, faces.black, faces.black]
-let xPosColor = [faces.black, faces.black, faces.blue]
-let yNegColor = [faces.orange, faces.black, faces.black]
-let yPosColor = [faces.black, faces.black, faces.red]
-let zNegColor = [faces.white, faces.black, faces.black]
-let zPosColor = [faces.black, faces.black, faces.yellow]
-
 // prepare geometry
 let cubes = []
 // var geometry = new THREE.BoxGeometry();
@@ -66,7 +56,7 @@ let cubes = []
 var objLoader = new OBJLoader(loadManager);
 // let geometry = stlLoader.load('src/resources/models/cube.stl')
 
-objLoader.load( 'src/resources/models/cube.obj', function ( object ) {
+objLoader.load( 'src/resources/models/cubeUV.obj', function ( object ) {
 	// var material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200, wireframe: false } );
 	// var mesh = new THREE.Mesh( geometry, material );
 	// mesh.position.set( -1.5, -0.7, -0.7 );
@@ -97,27 +87,18 @@ objLoader.load( 'src/resources/models/cube.obj', function ( object ) {
 			yPos.forEach(j => {
 				zPos.forEach(k => {
 
-					// set face definition
-					let matArray = [
-						xPosColor[i],
-						xNegColor[i],
-						yPosColor[j],
-						yNegColor[j],
-						zPosColor[k],
-						zNegColor[k]
-					]
-
-					let index = i*3+j*3+k
+					let index = i*9+j*3+k
+					console.log(index)
 					let mesh = object.clone();
 					mesh.traverse( function( child ) {
 			            if ( child instanceof THREE.Mesh ) {
-			                child.material = matArray[index%6];
+			                child.material = materialMaps[index];
 			            }
 			        } );
 					// let mesh = new THREE.Mesh( geometry, faces.red); //matArray );
 					let cube = {
 						mesh: mesh,
-						material: faces.blue,
+						material: materialMaps[index],
 						xPos: 19.05*(i-1),
 						yPos: 19.05*(j-1),
 						zPos: 19.05*(k-1),
