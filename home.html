@@ -8,15 +8,40 @@
 		<style>
 			body {
 				background-color: #222;
-				color: #444;
+				color: #ccc;
+				font-size: 20px;
 			}
 			a {
 				color: #08f;
 			}
+
+			.container {
+				display: flex;
+				justify-content: center;
+			}
+
+			.textContainer {
+				height: 80px;
+				margin-right: 0 auto;
+				margin-left: 0 auto;
+				margin-top: 10px;
+				margin-bottom: 20px;
+				/*display: flex;
+				justify-content: center;*/
+				text-align: center;
+				/*flex-direction: column;*/
+			}
 		</style>
 	</head>
 	<body>
-
+		<div class="container">
+			<div class="textContainer">
+				<div>Welcome! Website development is in progress.</div>
+				<div>Play with this Rubik's Cube for now.</div> 
+				<div>Rotate it with right mouse click.</div>
+				<div>Zoom with scroll wheel.</div>
+			</div>
+		</div>
 		<script type="module" src="./src/scene.js">
 
 
