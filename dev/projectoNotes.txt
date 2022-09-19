@@ -1,0 +1,14 @@
+## Rubix Cube Project
+
+#### Rendering
+
+- Render a set of cubes with color and wear
+- Set up proper lighting
+
+#### Motion
+
+- Row and Columns must rotate as sets, depending on the action
+- Command Structure
+
+
+https://www.google.com/search?client=firefox-b-1-d&q=texture+mapping+blender#kpvalbx=_bePjXomcMtyHwbkPjJ6dmAs43
