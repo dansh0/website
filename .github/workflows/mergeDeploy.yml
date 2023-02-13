@@ -1,28 +1,28 @@
 on:
-    pull_request:
-        types: [closed]
-        branches:
-            - "master"
-        name: "🚀 Deploy website on push"
-        jobs:
-            web-deploy:
-                name: "🎉 Deploy"
-                runs-on: ubuntu-latest
+  pull_request:
+    types: [closed]
+    branches:
+      - "master"
+    name: 🚀 Deploy website on push
+    jobs:
+      web-deploy:
+        name: 🎉 Deploy
+        runs-on: ubuntu-latest
         steps:
-        - name: "🚚 Get latest code"
-          uses: "actions/checkout@v2"
-        
-        - name: "Use Node.js 14"
-          uses: "actions/setup-node@v2"
+        - name: 🚚 Get latest code
+          uses: actions/checkout@v2
+          
+        - name: Use Node.js 14
+          uses: actions/setup-node@v2
           with:
             node-version: '14'
   
-        - name: "🔨 Build Project"
+        - name: 🔨 Build Project
           run: |
-            npm ci
-            npm run build    
-        - name: "📂 Sync files"
-          uses: "SamKirkland/FTP-Deploy-Action@4.3.0"
+              npm ci
+              npm run build    
+        - name: 📂 Sync files
+          uses: SamKirkland/FTP-Deploy-Action@4.3.0
           with:
             server: ${{ secrets.FTP_SERVER }}
             username: ${{ secrets.FTP_USERNAME }}
