@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="textContainer">
-            <div>Welcome! Website is in progress</div>
+            <div>Welcome! My website is in progress</div>
             <div>Play with this Rubik's Cube for now</div> 
             <div>Rotate it with right mouse click</div>
             <div>Zoom with scroll wheel</div>
